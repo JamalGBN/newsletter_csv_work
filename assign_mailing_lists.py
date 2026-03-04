@@ -1,19 +1,24 @@
 import csv
 
 csv_file = "sport_newsletter.csv"
-new_file = "edited3.csv"
-nl_list = ["sport_newsletter.csv", "tech_newsletter.csv", "gardening_newsletter.csv", "celebrity_newsletter.csv", "diet_newsletter.csv", "food_newsletter.csv", "travel_newsletter.csv", "health_newsletter.csv", "property_newsletter.csv", "opinion_newsletter.csv", "politics_newsletter.csv", "motoring_newsletter.csv", "news_newsletter.csv", "royal_newsletter.csv"]
+new_file = "joined_newsletters.csv"
+nl_list = ["sport_newsletter.csv", "tech_newsletter.csv", "gardening_newsletter.csv", "celebrity_newsletter.csv", "diet_newsletter.csv", "food_newsletter.csv", "travel_newsletter.csv", "health_newsletter.csv", "property_newsletter.csv", "opinion_newsletter.csv", "politics_newsletter.csv", "motoring_newsletter.csv", "news_newsletter.csv", "royal_newsletter.csv", "promotions_newsletter.csv"]
 
 column_headings = ["Emails", "Status", "Newsletters"]
 emails = []
 email_index = {}
+
+# format newsletter array
+# def handleList(lean_newsletters):
+#     lean_map = lean_newsletters.replace("[", "").replace("]", "").replace("'", "")
+#     return lean_map
 
 # cycle through downloaded csvs and create an array of emails, and newsletter preference
 def read_csv(nl_list):
     for i in range(len(nl_list)):
         # get newsletter name
         newsletter_name = nl_list[i].split("_")[0]
-        with open(nl_list[i], "r", encoding="utf-8-sig") as file:
+        with open(f"newsletters/{nl_list[i]}", "r", encoding="utf-8-sig") as file:
             reader = csv.reader(file)
             header = next(reader)
 
@@ -74,10 +79,15 @@ def read_csv(nl_list):
 
     return emails
 read_csv(nl_list)
-print(emails, "emails")
+
+for i in range(len(emails)):
+    emails[i]["Newsletters"] = str(emails[i]["Newsletters"]).replace("[", "").replace("]", "").replace("'", "")
+
+# print(emails, "filtered nls")
+
 
 # write the new csv file
-with open(new_file, "w", encoding="utf-8-sig") as new_doc:
+with open(new_file, "w", encoding="utf-8-sig", newline="") as new_doc:
     writer = csv.DictWriter(new_doc, fieldnames=column_headings)
     writer.writeheader()
     writer.writerows(emails)

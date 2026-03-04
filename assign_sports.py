@@ -1,4 +1,3 @@
-import requests
 import csv
 
 csv_file = "sport_newsletter.csv"
