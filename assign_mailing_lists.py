@@ -1,4 +1,3 @@
-import requests
 import csv
 
 csv_file = "sport_newsletter.csv"
@@ -9,7 +8,7 @@ column_headings = ["Emails", "Status", "Newsletters"]
 emails = []
 email_index = {}
 
-
+# cycle through downloaded csvs and create an array of emails, and newsletter preference
 def read_csv(nl_list):
     for i in range(len(nl_list)):
         # get newsletter name
@@ -77,26 +76,10 @@ def read_csv(nl_list):
 read_csv(nl_list)
 print(emails, "emails")
 
+# write the new csv file
 with open(new_file, "w", encoding="utf-8-sig") as new_doc:
     writer = csv.DictWriter(new_doc, fieldnames=column_headings)
     writer.writeheader()
     writer.writerows(emails)
-
-
-# url = "https://api.pushwoosh.com/json/1.3/getTags"
-
-
-
-# req_body = {
-    
-#     "request": {
-#         "application": "AB023-DEB30",
-#         "hwid": "inderpal.aubby+testgbnPW201@gbnews.uk"
-#     }
-
-# }
-
-# req = requests.post(url, req_body)
-
 
 
